@@ -1,0 +1,84 @@
+<% include ../partials/header %>
+
+<%#<script src = "/config/airports.js"></script>
+<script src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+<script src = "/jquery-upvote-master/lib/jquery.upvote.js"></script> 
+
+<link rel="stylesheet" type="text/css" href="/viima/css/jquery-comments.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">%>
+
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/css/flightdealcss.css">
+
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
+<%#<script src = "https://unpkg.com/fuse.js@2.5.0/src/fuse.min.js"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.1/lodash.min.js">
+
+
+</script>
+<script>
+  $('.dropdown-trigger').dropdown();
+
+</script>
+
+<script src = "/config/funcs.js"></script>
+<script type="text/javascript" src="/viima/js/jquery-comments.js"></script>
+<link rel=  "stylesheet" href= "/jquery-upvote-master/lib/jquery.upvote.css">%>
+
+
+
+
+
+	<a href = "/auth/twitter">Sign In/Register With Twitter</a>
+	<a href = "/auth/local">Sign In/Register With Email</a>
+	<a href = "/add_new_deal">Add A Deal</a>
+
+ <div class = "container" >
+<div class="row">
+
+
+</div>
+ </div>
+
+
+<div id = "myselector"></div>
+
+
+<script>
+var reqdata = <%-JSON.stringify(data) %>;
+console.log(reqdata);
+reqdata.forEach((item) => 
+
+{
+//$(".row").append("<h1>hello</h1>");
+  $(".row").append("<div class='col s3'><div class = 'img'><img width='300' src ='."+item.img_local+"'></div> <div class ='price'>"+item.price+"</div><div class ='title'>"+item.title+"</div><div class ='link'><a href ='"+item.link+"'>Buy</a> </div><div class='size-list'></div></div>");
+  console.log(item);
+
+  if(item.sizes.length > 0)
+  {
+
+  $(".size-list").append("<a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Sizes</a><ul id='dropdown1' class='dropdown-content'></ul>");
+  }
+item.sizes.forEach((itm) =>
+{
+	
+	$("#dropdown1").append("<li>"+itm+"</li>");
+
+}
+
+);
+
+}
+)
+
+ $('.dropdown-trigger').dropdown();
+
+</script>
+<% include ../partials/footer %>
+

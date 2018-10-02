@@ -1,0 +1,375 @@
+<% include ../partials/header %>
+
+<script src = "/config/airports.js"></script>
+<script src = "/config/airlines.js"></script>
+<script src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/css/flightdealcss.css">
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
+<script src = "https://unpkg.com/fuse.js@2.5.0/src/fuse.min.js"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.1/lodash.min.js">
+
+
+</script>
+<script src = "/config/funcs.js"></script>
+
+<form id ="myform" autocomplete = "off">
+
+<div class="form-group">
+  <label class="control-label">Origin</label>
+  <input id ="autocomplete" type="text" name = "autocomplete" required />
+</div>
+
+
+
+
+<div class="form-group">
+  <label class="control-label">Destination</label>
+  <input id ="destcomplete" type="text" name = "destcomplete" required />
+</div>
+<div class="form-group">
+  <label class="control-label">Departure</label>
+  <input id ="depdate" type="text" name = "depdate" required />
+</div>
+<div class="form-group">
+  <label class="control-label">Arrival</label>
+  <input id ="arrdate" type="text" name = "arrdate" required />
+</div>
+<div class="form-group">
+  <label class="control-label">One Way/ Roundtrip</label>
+  <select name ="trip-type" id ="trip-type" required>
+  <option value="Roundtrip">RoundTrip</option>
+  <option value="One Way">One Way</option>
+  </select>
+</div>
+<div class="form-group">
+  <label class="control-label">Class</label>
+  <select name ='trip-class' id = 'trip-class' required>
+  <option value="economy">Economy</option>
+  <option value="premium-economy">Premium Economy</option>
+  <option value="business">Business</option>
+  <option value="first-class">First Class</option>
+  </select>
+</div>
+<div class="form-group">
+  <label class="control-label">Airline</label>
+  <input id ="airlinecomplete" name="airlinecomplete" type="text" />
+</div>
+
+
+<div class="form-group">
+  <label class="control-label">Total Fare ($USD)</label>
+  <input id ="fare" name ="fare" type="number" required/>
+</div>
+<div class="form-group">
+  
+  <input id ="submit" type="submit" />
+</div>
+</form>
+
+
+<script>
+
+
+//console.log(reqdata+"dd");
+
+
+
+var options = {
+  shouldSort: true,
+  threshold: 0.4,
+  maxPatternLength: 32,
+  keys: [{
+    name: 'iata',
+    weight: 0.5
+  }, {
+    name: 'name',
+    weight: 0.3
+  }, {
+    name: 'city',
+    weight: 0.2
+  }, {
+    name: 'country',
+    weight: 0.1
+  }]
+};
+
+var options2 = {
+  shouldSort: true,
+  threshold: 0.4,
+  maxPatternLength: 32,
+  keys: [{
+    name: 'name',
+    weight: 0.5
+  }]
+  }
+
+var results = [];
+var numResults = 0;
+var selectedIndex = -1;
+
+
+
+function Autocomp(a, b)
+{
+
+
+var self = this;
+this.results = [];
+this.div  = $('#'+a)
+  .on('click', function(e) {
+
+    console.log("clicked");
+    e.stopPropagation();
+  })
+  .on('focus keyup', function(e)
+
+{
+   self.search(e);
+
+ })
+  .on('keydown', function(e)
+
+{
+   self.onKeyDown(e);
+
+ });
+
+this.wrap = $('<div>')
+  .addClass('autocomplete-wrapper')
+  .insertBefore(this.div)
+  .append(this.div);
+this.list = $('<div>')
+  .addClass('autocomplete-results')
+  .on('click', '.autocomplete-result', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    self.selectIndex($(this).data('index'));
+  })
+  .appendTo(this.wrap);
+
+
+  this.onKeyDown = function(e)
+  {
+    console.log("keydown");
+
+switch(e.which) {
+    case 38: // up
+      selectedIndex--;
+      if (selectedIndex <= -1) {
+        selectedIndex = -1;
+      }
+      this.list.attr('data-highlight', selectedIndex);
+      break;
+    case 13: // enter
+      this.selectIndex(selectedIndex);
+      break;
+    case 9: // enter
+      this.selectIndex(selectedIndex);
+      e.stopPropagation();
+      return;
+    case 40: // down
+      selectedIndex++;
+      if (selectedIndex >= numResults) {
+        selectedIndex = numResults-1;
+      }
+      this.list.attr('data-highlight', selectedIndex);
+      break;
+
+    default: return; // exit this handler for other keys
+  }
+  e.stopPropagation();
+  e.preventDefault(); // prevent the default action (scroll / move caret)
+
+
+  };
+
+  this.search = function(e)
+
+
+{
+  console.log(e.which);
+  console.log(this.results);
+  console.log("search call");
+  console.log(this.div.val());
+    if (e.which === 38 || e.which === 13 || e.which === 40) {
+    return;
+  }
+  
+  if (this.div.val().length > 0) {
+  if(b)
+  {
+ results = _.take(fuse2.search(this.div.val()), 7);
+  this.results = results;
+ numResults = results.length;
+ //console.log(results);
+    console.log("ress");
+    var divs = results.map(function(r, i) {
+        return '<div class="autocomplete-result" data-index="'+ i +'">'
+             + '<div><b>'+ r.name +'</b></div>'
+             + '</div>';
+     });
+  }
+  else
+  {
+
+    results = _.take(fuse.search(this.div.val()), 7);
+    this.results = results;
+    numResults = results.length;
+    console.log(results);
+    
+    var divs = results.map(function(r, i) {
+        return '<div class="autocomplete-result" data-index="'+ i +'">'
+             + '<div><b>'+ r.iata +'</b> - '+ r.name +'</div>'
+             + '<div class="autocomplete-location">'+ r.city +', '+ r.country +'</div>'
+             + '</div>';
+     });
+
+    }
+   // console.log(divs);
+    
+    selectedIndex = -1;
+    this.list.html(divs.join(''))
+      .attr('data-highlight', selectedIndex);
+//console.log(this.list)    ;
+  } else {
+    numResults = 0;
+    this.list.empty();
+  }
+};
+
+this.selectIndex =  function(index)
+
+{console.log(index);
+console.log(this.div);
+console.log(this.results);
+console.log("results called");
+
+this.div.rules('add', { memberof: this.results });
+console.log(this.results);
+console.log("results called");
+//$("#autocomplete").rules('add', { memberof: ['a', 'b']  });
+//$("#destcomplete").rules('add', { memberof: ['c', 'd'] });
+//$("#airlinecomplete").rules('add', { memberof: a3.results });
+
+  if (results.length >= index + 1) {
+  if(b)
+  {
+  this.div.val(results[index].name);
+     this.div.valid();
+
+  }
+  else
+  {
+    this.div.val(results[index].city+" - "+results[index].iata);
+     this.div.valid();
+    }
+    //console.log( this.div.val(results[index].iata));
+    this.clearResults();
+  }  
+};
+this.clearResults = function()
+
+{
+results = [];
+  numResults = 0;
+  this.list.empty();
+
+};
+
+
+
+
+}    
+
+
+
+var fuse = new Fuse(airports, options);
+var fuse2 = new Fuse(airlines, options2);
+
+var a1ini = "autocomplete";
+var a2ini = "destcomplete";
+var a3ini = "airlinecomplete";
+var a1 = new Autocomp(a1ini);
+var a2 = new Autocomp(a2ini);
+var a3 = new Autocomp(a3ini, "true");
+console.log(a1);
+
+
+
+$(document)
+  .on('mouseover', '.autocomplete-result', function(e) {
+    var index = parseInt($(this).data('index'), 10);
+    if (!isNaN(index)) {
+      // list.attr('data-highlight', index);
+    }
+  })
+  .on('click', clearResults);
+
+function clearResults() {
+  results = [];
+  numResults = 0;
+  a1.list.empty();
+  a2.list.empty();
+  a3.list.empty();
+}
+
+
+function add_deal()
+{
+console.log("add deal called");
+var origindata = $("#autocomplete").val()
+var originarr = origindata.split(" - ");
+var origin = originarr[0];
+var origin_aport = originarr[1];
+
+var destdata = $("#destcomplete").val()
+var destarr = destdata.split(" - ");
+var dest = destarr[0];
+var dest_aport = destarr[1];
+var triptype = $("#trip-type").val()
+var tripclass = $("#trip-class").val()
+var airline = $("#airlinecomplete").val()
+var fare = $("#fare").val();
+var depdate = $("#depdate").val();
+var arrdate = $("#arrdate").val();
+console.log(typeof(fare)+" is the type for fare");
+
+var params = {origin:origin, dest:dest, origin_aport: origin_aport, dest_aport: dest_aport,  depdate: depdate, arrdate: arrdate, triptype: triptype, tripclass: tripclass, airline: airline, fare:fare};
+
+//var startDate = new Date($('#depdate').val());
+//var endDate = new Date($('#arrdate').val());
+//console.log(startDate);
+//console.log(endDate);
+
+
+console.log(params);
+
+var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log("approval succcessful");
+
+      
+      // document.getElementById("demo").innerHTML = this.responseText + params;
+    }
+  };
+  
+  xhttp.open("POST", "/add_deal", true);
+  xhttp.setRequestHeader('Content-Type', 'application/json');
+ xhttp.send(JSON.stringify(params));
+  
+
+}
+
+
+ 
+
+
+
+
+</script>

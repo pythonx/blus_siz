@@ -1,0 +1,47 @@
+
+<% include ../partials/header %>
+
+
+<form method = "post" action = "/bsrch">
+
+<input type="text" name="bsrch" id="">
+
+<input type="submit" name="submit" id="">
+
+
+</form>
+
+
+
+
+
+<%
+
+
+
+
+message.items.forEach(function(item)
+
+{
+
+	var bookid = item.volumeInfo.industryIdentifiers[0].identifier;
+	var btitle = item.volumeInfo.title;
+	$( ".result" ).append("<h1>"+item.volumeInfo.title+"</h1>");
+   console.log(item.volumeInfo.title);
+   if(item.volumeInfo.imageLinks)
+   {
+   	$( ".result" ).append("<img src="+item.volumeInfo.imageLinks.smallThumbnail+" />");
+   console.log(item.volumeInfo.imageLinks.smallThumbnail);
+   console.log(bookid);
+$( ".result" ).append("<br><button onclick = 'addbook(this)' id = '"+bookid+"' data-val = '"+btitle+"'>Add to My Books</button>");
+}
+}
+
+		);
+
+
+ %>
+<div class = "result"></div>
+	<a href = "/auth/twitter">Sign In/Register With Twitter</a>
+	
+<% include ../partials/footer %>

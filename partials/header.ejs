@@ -1,0 +1,60 @@
+		<!DOCTYPE html>
+<html lang="en">
+<head>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Compiled and minified CSS -->
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+</head>
+<script>
+	$(document).ready(function()
+{
+	var $container = $('.container');
+$container.imagesLoaded(function(){
+    $container.masonry({
+        itemSelector: 'div.col',
+        columnWidth: 'div.col'
+    });
+    $('div.col img').addClass('not-loaded');
+    $('div.col img.not-loaded').lazyload({
+        effect: 'fadeIn',
+        load: function() {
+            // Disable trigger on this image
+            $(this).removeClass("not-loaded");
+            $container.masonry('layout');
+        }
+    });
+    $('div.col img.not-loaded').trigger('scroll');
+});
+//$("img.lazy").lazyload();
+
+}
+
+		);
+	
+// 	$(window).on('load',() =>
+// 	{
+// 		var $grid =  $('.container').masonry({columnWidth: 'div.col', itemSelector: 'div.col'});	
+
+// 		var msnry = $grid.data('masonry');
+
+// // init Infinite Scroll
+// $grid.infiniteScroll({
+//   // Infinite Scroll options...
+//   append: '.grid__item',
+//   outlayer: msnry,
+// });
+// 	})
+	</script>
+<body>
+<a href="/"><h1 class = "center-align">Book Swap</h1></a>

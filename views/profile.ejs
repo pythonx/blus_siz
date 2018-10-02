@@ -1,0 +1,104 @@
+<% include ../partials/header
+
+
+
+
+ %>
+
+   <nav class = "brown		">
+    <div class="nav-wr">
+   
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+        <li><a href="/requests">Requests</a></li>
+        <li><a href="/all">All Books</a></li>
+      </ul>
+    </div>
+  </nav>
+<script>
+var usern = "<%=user.id  %>";
+
+console.log(usern);
+console.log(bookdata);
+
+</script>
+
+ 
+ <script type = "text/javascript" src = "./testfile.js"> </script>
+
+<script>
+
+var bdata2 = <%-JSON.stringify(bookdata)%>
+console.log(bdata2);
+
+function testfunc()
+{
+var bname=document.getElementById('bsrch').value;
+console.log(bname);
+	console.log("testfunc");
+	 $("p").append("<b>Appended text</b>");
+	$.get( "https://www.googleapis.com/books/v1/volumes?q="+bname, function( data ) {
+
+	alert("test2");
+
+if(data)
+{
+	console.log("data");
+}
+else
+{
+	console.log("no data");
+}
+
+});
+console.log("funu");
+}
+
+ </script>
+<form  onsubmit = "bsrchfunc(); return false;">
+
+<input type="text" name="bsrch" id="bsrch" required>
+
+<input type="submit" name="submit" id="" >
+
+
+</form>
+<div id = "demo"><p class = "testblue">blue</p></div>
+<div class = "result"></div>
+<hr>
+
+<div class = "mybookscont">
+
+<div class = "mybookshead center-align"><h2>Your Books</h2></div>
+<div class = "mybooks row flex"></div>
+</div>
+
+<script>
+
+ mybooksfunc(bdata2);
+</script>
+<%
+
+%>
+
+<h5>Your polls</h5>
+
+<%# for (i=0; i< polldata.length; i++)
+
+{
+	
+	%>
+
+
+<!--<h2><a href = "/poll/<%#=polldata[i].id%>"><%#=polldata[i].name%></a></h2> <span class = "delpoll"><a href = "/pollrem/<%#=polldata[i].id%>">X</a></span>-->
+</div>
+
+<br>
+	<%#
+}
+
+ %>
+<a href="/new">Create a new poll</a>
+<br><br>
+<a href="/logout">Sign Out</a>
+<% include ../partials/footer %>

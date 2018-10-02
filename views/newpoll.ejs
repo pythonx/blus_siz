@@ -1,0 +1,25 @@
+<% include ../partials/header %>
+<body>
+
+<%
+
+
+%>
+<form action="/new" method = "post">
+<h2>new poll</h2>
+<label for="polltitle">Title:</label><input type="text" name = "polltitle" id = "polltitle" required><br><br>
+<label for="polloptions">Options:</label><textarea name="polloptions" id="polloptions" cols="30" rows="10" required></textarea><br>
+<input type="submit" name="submit" value="submit">
+
+<style>
+#polloptions
+{
+	
+	vertical-align: text-top;
+}
+
+</style>
+
+</form>
+</body>
+</html>

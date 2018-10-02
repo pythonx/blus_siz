@@ -1,0 +1,117 @@
+<% include ../partials/header
+
+
+
+
+ %>
+
+  <script type = "text/javascript" src = "./testfile.js"> </script>
+
+  <script>
+
+  var reqdata = <%-JSON.stringify(data1) %>;
+  var reqdata2 = <%-JSON.stringify(data2) %>;
+  console.log(reqdata);
+  console.log(reqdata2);
+
+
+  </script>
+
+   <nav class = "brown		">
+    <div class="nav-wr">
+   
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+        <li><a href="/requests">Requests</a></li>
+        <li><a href="/all">All Books</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+
+
+   <nav class = "white	reqnav	">
+    <div class="nav-wr">
+   
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="#" onclick = "yourreq(this)" id ='' >Requests To You</a></li>
+        <li><a href="/requests">Requests From You</a></li>
+         		
+      </ul>
+    </div>
+  </nav>
+
+  <div class = "reqdata">
+
+  <div class = "reqfrom">
+<h2>Your Requests<h2>
+</div>
+
+
+<div class = "reqto">
+<h2>Requests To You<h2>
+</div>
+
+
+
+
+  </div>
+<script>
+if(reqdata.length >0)
+
+{
+	reqdata.forEach(function(item)
+
+
+{
+
+var bookid = item.Bookid;
+
+
+$(".reqfrom").append("<div id = '"+bookid+"' class = 'col s4'></div>");
+
+$("#"+bookid).append("<h3>"+item.Bookname+"</h3>");
+$("#"+bookid).append("<img src='"+item.Bookimg+"'>");
+
+	
+}
+	);
+
+
+}
+
+
+
+if(reqdata2.length >0)
+
+{
+	reqdata2.forEach(function(item)
+
+
+{
+
+var bookid = item.Bookid;
+
+
+$(".reqto").append("<div id = '"+bookid+"' class = 'col s4'></div>");
+
+$("#"+bookid).append("<h3>"+item.Bookname+"</h3>");
+$("#"+bookid).append("<img src='"+item.Bookimg+"'>");
+
+	
+}
+	);
+
+
+}
+
+
+
+
+
+
+
+
+
+</script>

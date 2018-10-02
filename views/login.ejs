@@ -1,0 +1,40 @@
+<% include ../partials/header
+
+
+
+
+ %>
+
+  <script type = "text/javascript" src = "./testfile.js"> </script>
+
+  <script>
+
+  
+
+
+  </script>
+
+   <nav class = "brown		">
+    <div class="nav-wr">
+   
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+        <li><a href="/requests">Requests</a></li>
+        <li><a href="/all">All Books</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<form action="/auth/local" method = "post">
+<div class = "input-field">
+<input type="email" id ="username" name ="username" class ="validate" required>
+<label for="email">Email</label>
+</div>
+<div class = "input-field">
+<input type="password" id ="password" name ="password" required>
+<label for="password">Password</label>
+</div>
+<input type="submit" name ="submit" value ="submit">
+</form>
+
+<p>Don't have an account? <a href ="/newuser">Sign Up Here</a></p>

@@ -1,0 +1,53 @@
+<form id ="myform" autocomplete = "off">
+
+<div class="form-group">
+  <label class="control-label">Origin</label>
+  <input id ="autocomplete" type="text" name = "autocomplete" required />
+</div>
+
+
+
+
+<div class="form-group">
+  <label class="control-label">Destination</label>
+  <input id ="destcomplete" type="text" name = "destcomplete" required />
+</div>
+<div class="form-group">
+  <label class="control-label">Departure</label>
+  <input id ="depdate" type="text" name = "depdate" required />
+</div>
+<div class="form-group">
+  <label class="control-label">Arrival</label>
+  <input id ="arrdate" type="text" name = "arrdate" required />
+</div>
+<div class="form-group">
+  <label class="control-label">One Way/ Roundtrip</label>
+  <select name ='trip-type' id ="trip-type" required>
+  <option value="Roundtrip">RoundTrip</option>
+  <option value="One Way">One Way</option>
+  </select>
+</div>
+<div class="form-group">
+  <label class="control-label">Class</label>
+  <select name ='trip-class' id = 'trip-class' required>
+  <option value="economy">Economy</option>
+  <option value="premium-economy">Premium Economy</option>
+  <option value="business">Business</option>
+  <option value="first-class">First Class</option>
+  </select>
+</div>
+<div class="form-group">
+  <label class="control-label">Airline</label>
+  <input id ="airlinecomplete" name="airlinecomplete" type="text" />
+</div>
+
+
+<div class="form-group">
+  <label class="control-label">Total Fare ($USD)</label>
+  <input id ="fare" name ="fare" type="number" required/>
+</div>
+<div class="form-group">
+  
+  <input id ="submit" type="submit" />
+</div>
+</form>

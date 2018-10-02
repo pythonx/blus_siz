@@ -1,0 +1,34 @@
+<% include ../partials/header
+
+
+
+
+ %>
+<script type = "text/javascript" src = "./testfile.js"> </script>
+   <nav class = "brown		">
+    <div class="nav-wr">
+   
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+        <li><a href="/requests">Requests</a></li>
+        <li><a href="/all">All Books</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+<div class = "mybooks row flex"></div>
+
+  <script>
+var bookdata = <%- JSON.stringify(data)  %>;
+mybooksfunc(bookdata, "all");
+
+console.log(bookdata);
+
+
+
+
+
+
+
+</script>

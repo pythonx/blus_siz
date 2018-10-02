@@ -1,0 +1,71 @@
+<% include ../partials/header %>
+
+<%#<script src = "/config/airports.js"></script>
+<script src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+<script src = "/jquery-upvote-master/lib/jquery.upvote.js"></script> 
+
+<link rel="stylesheet" type="text/css" href="/viima/css/jquery-comments.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">%>
+
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="../css/plus_size.css">
+
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
+<%#<script src = "https://unpkg.com/fuse.js@2.5.0/src/fuse.min.js"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.1/lodash.min.js">
+
+
+</script>
+
+
+<script src = "/config/funcs.js"></script>
+<script type="text/javascript" src="/viima/js/jquery-comments.js"></script>
+<link rel=  "stylesheet" href= "/jquery-upvote-master/lib/jquery.upvote.css">%>
+
+
+
+
+
+	<a href = "/auth/twitter">Sign In/Register With Twitter</a>
+  <a href = "/auth/local">Sign In/Register With Email</a> 
+	<a href = "/add_new_deal">Add A Deal</a>
+
+ <div class = "container" >
+<div class="row">
+
+
+</div>
+ </div>
+
+
+<div id = "myselector"></div>
+
+
+<script>
+var reqdata = <%-JSON.stringify(data) %>;
+console.log(reqdata);
+reqdata.forEach((item) => 
+
+{
+var itemid = item.id
+
+if(!item.id)
+{
+	itemid = item._id
+}
+  $(".row").append("<div class='card'><div class='card-contents'><div class='punit'><div class='col s3'><div class = 'img'><img class = 'lazy' width='200' data-original ="+item.img_resized+"></div><div class='details-block'><div class ='price'>"+item.price+"</div><div class ='buy_link'><a href ='"+item.link+"'>Buy</a> </div><div class ='details_link'><a href ='/product/"+itemid+"'>"+item.title.substring(0, 20)+"</a> </div></div></div></div></div></div>");
+}
+
+) 
+
+
+
+</script>
+<% include ../partials/footer %>
+
